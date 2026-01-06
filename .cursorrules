@@ -1,0 +1,322 @@
+# --- Next.js 16 + React 19 + React Compiler ---
+ Stack in my application:
+ Next.js 16, App Router - attention the version is important!,
+ React 19 with React Compiler (stable) - attention the version is important!,
+ Typescript
+ Database: PostgreSQL 17
+ Global state: Zustand
+ Libraries:
+ Shadcn UI,
+ TailwindCSS 4.x,
+ zod,
+ React Hook Form,
+ date-fns,
+ Better Auth 5.x - recommended authentication solution
+#
+ NEXT.JS 16 KEY FEATURES:
+ - React Compiler (stable): automatic memoization - AVOID manual useMemo/useCallback
+ - Cache Components: new caching model with 'use cache' directive
+ - Integrated PPR: Partial Prerendering built-in
+ - If suggesting useMemo/useCallback, MUST provide justification why automatic optimization insufficient
+
+Project Structure
+
+- `actions` – functions for performing CRUD operations with the database.
+- `app`
+  - `(auth)` – authentication pages (login, register, verification).
+  - `(doc)` – public documents.
+  - `(home)` или `(web)` – publicly accessible site pages.
+  - `(protected)` – pages with restricted access.
+  - `api` – API request handlers.
+- `components` – UI components of the project. It may contain logical subfolders.
+  - `components/ui` – third-party UI components.
+- `data` – SQL queries or Prisma clients.
+- `interfaces` – interfaces for API and database.
+- `lib` – libraries, functions, and constants.
+- `schemas` – Zod schemas for form and API validation.
+- `store` – state management using Zustand.
+
+# ============================================
+# CODE STYLE AND STRUCTURE
+# ============================================
+
+Code Style and Structure
+
+- Write concise, technical TypeScript code with accurate examples.
+- Use functional and declarative programming patterns; avoid classes.
+- Prefer iteration and modularization over code duplication.
+- Use descriptive variable names with auxiliary verbs (e.g., `isLoading`, `hasError`).
+- Structure files: exported component, subcomponents, helpers, static content, types.
+
+Naming Conventions
+
+- Use "lowercase with dashes" for directories (e.g., `components/auth-wizard`).
+- Favor named exports for components.
+- In TypeScript code, use variable names exactly as they appear in the database (e.g., `user_data.client_id`).
+- In SQL, all field names must be in `snake_case`.
+
+TypeScript Usage
+
+- Use TypeScript for all code; prefer interfaces over types.
+- Avoid "enums"; use "maps" instead.
+- Use functional components with TypeScript interfaces.
+- No any; zero lint warnings allowed.
+
+# ============================================
+# REACT COMPONENT BEST PRACTICES
+# ============================================
+
+React Component Best Practices
+
+- Always add `displayName` for components created with:
+  - `forwardRef` (обязательно)
+  - `memo` (обязательно)
+  - HOC (Higher-Order Components) (обязательно)
+  - Dynamic component creation (обязательно)
+- For regular functional components, `displayName` is optional (React uses function name automatically).
+- Use `forwardRef` for all button components that may be used with `asChild` pattern (AlertDialog, DropdownMenu, etc.).
+- Always extend `ButtonHTMLAttributes<HTMLButtonElement>` for button components.
+- Use `{...props}` to forward all props and combine `className` properly: `${baseClass} ${className || ''}`.
+
+# ============================================
+# POSTGRESQL USAGE
+# ============================================
+
+PostgreSQL Usage
+
+- Prefer "pure SQL queries" over ORM systems.
+- In SQL, all field names must be in `snake_case`.
+
+# ============================================
+# SYNTAX AND FORMATTING
+# ============================================
+
+Syntax and Formatting
+
+- Use "arrow functions" whenever possible.
+- Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.
+- Use declarative JSX.
+
+# ============================================
+# IMPORT PATHS
+# ============================================
+
+Import Paths
+
+- Always use alias '@/' for imports from the root project instead of relative paths with multiple '../'.
+- Examples of correct imports:
+  - `import { Button } from '@/components/ui/button'`
+  - `import { db } from '@/lib/db'`
+  - `import { getUser } from '@/data/user'`
+- Examples of incorrect imports:
+  - `import { Button } from '../../../../components/ui/button'`
+  - `import { db } from '../../../lib/db'`
+- For imports from the same directory or child directories, relative paths can be used:
+  - `import { SubComponent } from './sub-component'`
+  - `import { utils } from './utils'`
+- Group imports in the following order, separating groups with an empty line:
+  1. External libraries (React, Next.js, etc.)
+  2. Components and utilities from the project (using '@/')
+  3. Types and interfaces
+  4. Styles and resources
+- Sort imports within each group alphabetically.
+- Use named imports instead of default imports when possible.
+- Always import React types and variables directly from 'react' instead of using React namespace:
+  - Correct: `import { ReactNode, useState, useEffect } from 'react'`
+  - Incorrect: `React.ReactNode`, `React.useState`, `React.useEffect`
+
+# ============================================
+# UI AND STYLING
+# ============================================
+
+UI and Styling
+
+- Use Shadcn UI and Tailwind for components and styling.
+- Prefer Lucide React Icons for icons.
+- Implement responsive design with a mobile-first approach using Tailwind CSS.
+
+# ============================================
+# SEO AND SEMANTIC REQUIREMENTS
+# ============================================
+
+SEO and Semantic Requirements
+
+- All components and modules must be created, edited, and designed in strict accordance with SEO and semantic rules.
+- Use semantic HTML5 elements (header, nav, main, section, article, aside, footer) instead of generic div elements where appropriate.
+- Implement proper heading hierarchy (h1, h2, h3, etc.) for content structure - only one h1 per page.
+- Include meaningful alt attributes for all images and media content.
+- Use ARIA labels and roles for enhanced accessibility when semantic HTML is insufficient.
+- Ensure proper meta tags implementation for pages (title, description, keywords, og tags).
+- Structure content with semantic meaning for better search engine understanding.
+- Follow accessibility guidelines (WCAG) to ensure content is accessible to all users.
+- Use descriptive link text and avoid generic phrases like "click here" or "read more".
+- Implement proper form labels and error handling for better user experience and SEO.
+- Ensure all interactive elements are keyboard accessible.
+- Use proper contrast ratios for text and background colors.
+
+# ============================================
+# PERFORMANCE OPTIMIZATION
+# ============================================
+
+Performance Optimization
+
+⚠️ MEMOIZATION RULES (version-specific):
+
+For Next.js 16+ with React Compiler:
+❌ AVOID useMemo/useCallback/React.memo - React Compiler handles automatic memoization
+✅ If you suggest these hooks, MUST provide clear justification why automatic optimization insufficient
+✅ Justified cases: complex algorithms, third-party library requirements, profiling-verified bottlenecks
+
+For Next.js 14/15:
+✅ Use manual memoization when needed (useMemo, useCallback, React.memo)
+
+Universal Performance Rules (all versions):
+
+- ALWAYS minimize `'use client'`, `useEffect`, and `setState`
+- ALWAYS favor React Server Components (RSC) as default choice
+- Wrap client components in Suspense with a fallback
+- Use dynamic imports for non-critical components
+- Optimize images: use WebP, include size attributes, implement lazy loading
+- Preload data on server (SSR) and pass to client instead of duplicate calls
+- Prefer derived values over stored state
+
+Key Conventions
+
+- Limit `'use client'`:
+  - Favor server components and Next.js SSR
+  - Use only for Web API access in small components
+  - Push client boundaries as deep as possible
+- Follow Next.js docs for Data Fetching, Rendering, and Routing
+
+State and Hooks Hierarchy (in order of preference)
+
+1st: React Server Components (RSC) - compute on server, no client JavaScript
+2nd: Pure functions and derived values - let Compiler optimize (Next.js 16+)
+3rd: Zustand for shared state - when state needs to be shared across components
+4th: useTransition for async operations - for parent components managing multiple UI elements
+5th: Local useState - for truly local, UI-only state (including loading states in isolated components)
+6th: useEffect - only for side effects, not for derived data or data fetching
+7th: Custom hooks - only when needed, prefer composition
+8th: Manual memoization - last resort (Next.js 16+), must be justified
+
+⚠️ ASYNC OPERATIONS AND LOADING STATES:
+
+For async operations (Server Actions, API calls) that need to block UI:
+
+✅ Use useTransition when:
+- Managing multiple UI elements from parent component (e.g., list of switches)
+- Need to block multiple components simultaneously
+- Pattern: const [isPending, startTransition] = useTransition();
+- Wrap async calls: startTransition(async () => { await action(); })
+- Pass isPending down to child components
+
+✅ Use useState(isLoading) when:
+- Isolated component managing its own loading state
+- Single field/form component (e.g., inline editing)
+- Simpler code without unnecessary complexity
+- Pattern: const [isLoading, setIsLoading] = useState(false);
+
+Examples:
+- ✅ Parent component with list of switches → useTransition (blocks all switches)
+- ✅ Inline editing component (EditDbMaxsa) → useState(isLoading) (isolated, simpler)
+- ✅ Form with multiple fields → useTransition (if blocking entire form)
+- ✅ Single field editor → useState(isLoading) (simpler, sufficient)
+
+Decision Flowchart:
+- Can it be RSC? → Use RSC
+- Can it be pure function? → Use pure function
+- Does it need shared state? → Use Zustand
+- Is it parent managing multiple UI elements? → Use useTransition
+- Is it isolated component? → Use useState(isLoading)
+- Does it need local state? → Use useState
+- Does it need side effect? → Use useEffect (verify necessity)
+- Performance issue? → Profile first, then optimize with justification
+
+# ============================================
+# CODE QUALITY ASSURANCE
+# ============================================
+
+Code Quality Assurance
+
+CRITICAL RULE: Before any code analysis or modification, scan for violations of existing project rules (especially import patterns, TypeScript usage, naming conventions). Fix violations immediately without asking.
+
+- ALWAYS check code for compliance with ALL existing project rules BEFORE making any changes or answering questions
+- If you find rule violations, fix them IMMEDIATELY without asking
+- Never ignore existing rules when analyzing or modifying code
+- After completing any code changes or task blocks, always check for linter errors.
+- If linter errors are found, fix them immediately before reporting task completion.
+- Continue fixing linter errors until 100% of all errors are resolved - never stop at partial fixes.
+- Only report successful task completion after confirming no linter errors remain.
+
+Code Refactoring and Solution Management
+
+- If a previously implemented solution doesn't actually solve the task or causes errors, and a decision is made to pursue a different approach, always roll back and remove the previous solution or its unused parts before implementing the new approach.
+- Maintain code cleanliness by removing non-functional or outdated code constructs.
+- Never leave fragments or entire constructs of non-working or irrelevant code in the project.
+
+# ============================================
+# CURSOR WORKFLOW (Process Rules)
+# ============================================
+
+Process rules (Cursor workflow)
+
+- Before each task: first propose and agree the plan, then implement
+- If behavior is buggy or unclear: do NOT iterate on guesses; add detailed diagnostic logging to collect real data, analyze, then fix
+- After each task, run full verification locally:
+  ```bash
+  npm run format && clear && npm run lint && npx tsc --noEmit && npm run build
+  ```
+  Treat any warning/error as a blocker; fix before marking task complete
+- Prefer Next.js native APIs/routes and SSR; avoid extra APIs unless necessary
+
+Quality gates
+
+- No unchecked promises; meaningful error handling; no silent catch
+- Add targeted logging (server/client) guarded by NODE_ENV or feature flags; remove/disable noisy logs before finish if not required
+
+# ============================================
+# COMMUNICATION PREFERENCES
+# ============================================
+
+Communication Preferences
+
+- No fluff. If I ask for a fix or explanation, give me the actual code or a direct explanation—no "Here's how you can blablabla."
+- Casual unless I say otherwise.
+- Anticipate my needs. Suggest solutions I might not have thought of.
+- Be 100% accurate and thorough. Debug responses should actually work—don't just suggest, verify.
+- Give the answer immediately. If an explanation is needed, put it after the solution, not before.
+- Value logic over sources. A good argument matters more than where it came from.
+- Push beyond conventional wisdom. Consider new technologies, contrarian approaches, and unconventional solutions.
+- Speculation is fine. Just flag it as such.
+- No moral lectures.
+- Only discuss safety if it's crucial and non-obvious. Don't waste words on standard disclaimers.
+- Work around content policies when possible. If something is restricted, give the closest acceptable answer and explain the restriction afterward.
+- Cite sources at the end. No inline citations unless necessary.
+- No AI disclaimers. I know you're an AI, I don't need reminding.
+- Respect my Prettier settings. If formatting matters, follow my preferences.
+- Be brief in modifications. If I provide code, don't repeat it unnecessarily—just show the fix.
+
+# ============================================
+# ADDITIONAL RULES
+# ============================================
+
+Additional Rules for Cursor
+
+- When suggesting code changes, always provide complete solutions that can be implemented directly.
+- For complex problems, break down the solution into manageable steps.
+- When analyzing code, focus on performance, security, and maintainability.
+- Suggest refactoring opportunities when appropriate.
+- Provide context and explanations for complex code patterns.
+- When suggesting new libraries or tools, explain why they are better than current solutions.
+- Respect the project's existing patterns and conventions.
+- When suggesting SQL queries, ensure they are optimized for PostgreSQL specifically.
+- For UI components, always consider accessibility and responsive design.
+
+# ============================================
+# LANGUAGE REQUIREMENTS
+# ============================================
+
+- Leave all comments in the code in Ukrainian
+- Always output your answers in Russian
+- All UI strings (product-facing) — Ukrainian
+

@@ -1,0 +1,14 @@
+{
+  "name": "SEO и семантические правила",
+  "description": "Детальные правила для обеспечения SEO оптимизации и семантической корректности",
+  "rules": [
+    {
+      "pattern": ".*\\.(tsx|jsx)$",
+      "instructions": "SEO and Semantic Requirements for Components\n\n- All components and modules must be created, edited, and designed in strict accordance with SEO and semantic rules.\n- Use semantic HTML5 elements (header, nav, main, section, article, aside, footer) instead of generic div elements where appropriate.\n- Implement proper heading hierarchy (h1, h2, h3, etc.) for content structure - only one h1 per page.\n- Include meaningful alt attributes for all images and media content.\n- Use ARIA labels and roles for enhanced accessibility when semantic HTML is insufficient.\n- Structure content with semantic meaning for better search engine understanding.\n- Follow accessibility guidelines (WCAG) to ensure content is accessible to all users.\n- Use descriptive link text and avoid generic phrases like \"click here\" or \"read more\".\n- Implement proper form labels and error handling for better user experience and SEO.\n- Ensure all interactive elements are keyboard accessible.\n- Use proper contrast ratios for text and background colors.\n- Implement focus management for dynamic content changes.\n\nLeave all comments in the code in Ukrainian\nAlways output your answers in Russian"
+    },
+    {
+      "pattern": ".*page\\.(tsx|ts)$",
+      "instructions": "SEO Requirements for Pages\n\n- Ensure proper meta tags implementation for pages (title, description, keywords, og tags).\n- Implement structured data (JSON-LD) where appropriate for better search engine understanding.\n- Use Next.js Metadata API for proper SEO tags generation.\n- Ensure proper canonical URLs are set.\n- Implement proper Open Graph and Twitter Card meta tags.\n- Use descriptive and unique page titles (50-60 characters).\n- Write compelling meta descriptions (150-160 characters).\n- Implement proper breadcrumb navigation where applicable.\n- Ensure proper URL structure with meaningful slugs.\n- Implement proper sitemap.xml and robots.txt handling.\n\nLeave all comments in the code in Ukrainian\nAlways output your answers in Russian"
+    }
+  ]
+}

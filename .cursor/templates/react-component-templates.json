@@ -1,0 +1,159 @@
+{
+  "name": "React Component Templates",
+  "description": "Ready-to-use templates for common React component patterns",
+  "version": "1.0.0",
+  "templates": {
+    "forwardRef_button": {
+      "name": "ForwardRef Button Component",
+      "description": "Template for button component with forwardRef and proper TypeScript types",
+      "category": "button",
+      "template": "import { forwardRef, ButtonHTMLAttributes } from 'react';\n\ninterface Props extends ButtonHTMLAttributes<HTMLButtonElement> {\n  variant?: 'primary' | 'secondary' | 'success' | 'error';\n  // Додайте ваші кастомні пропси тут\n}\n\n/**\n * [COMPONENT_DESCRIPTION]\n * \n * @param variant - Варіант стилю кнопки\n * @param className - Додаткові CSS класи\n * @param children - Вміст кнопки\n * @param props - Всі інші HTML button атрибути\n */\nexport const [COMPONENT_NAME] = forwardRef<HTMLButtonElement, Props>(\n  ({ variant = 'primary', className, children, ...props }, ref) => {\n    return (\n      <button\n        ref={ref}\n        className={`base-button button-${variant} ${className || ''}`}\n        {...props}\n      >\n        {children}\n      </button>\n    );\n  }\n);\n\n[COMPONENT_NAME].displayName = '[COMPONENT_NAME]';",
+      "placeholders": {
+        "[COMPONENT_NAME]": "Name of the component (e.g., 'MyButton')",
+        "[COMPONENT_DESCRIPTION]": "Description of what the component does"
+      },
+      "usage": "Use this template for any button component that needs to work with Radix UI's asChild pattern (AlertDialog, DropdownMenu, etc.)"
+    },
+    "forwardRef_icon_button": {
+      "name": "ForwardRef Icon Button Component",
+      "description": "Template for icon button with conditional content",
+      "category": "button",
+      "template": "import { forwardRef, ButtonHTMLAttributes } from 'react';\nimport { [ICON_IMPORT] } from 'lucide-react';\n\ninterface Props extends ButtonHTMLAttributes<HTMLButtonElement> {\n  [STATE_PROP]: boolean;\n}\n\n/**\n * [COMPONENT_DESCRIPTION]\n * \n * @param [STATE_PROP] - Контролює стан кнопки та іконку\n * @param className - Додаткові CSS класи\n * @param props - Всі інші HTML button атрибути\n */\nexport const [COMPONENT_NAME] = forwardRef<HTMLButtonElement, Props>(\n  ({ [STATE_PROP], className, ...props }, ref) => {\n    return (\n      <button\n        ref={ref}\n        className={`button-icon ${[STATE_PROP] ? '[ACTIVE_CLASS]' : '[INACTIVE_CLASS]'} ${className || ''}`}\n        {...props}\n      >\n        {[STATE_PROP] ? <[ACTIVE_ICON] className=\"h-4 w-4\" /> : <[INACTIVE_ICON] className=\"h-4 w-4\" />}\n      </button>\n    );\n  }\n);\n\n[COMPONENT_NAME].displayName = '[COMPONENT_NAME]';",
+      "placeholders": {
+        "[COMPONENT_NAME]": "Name of the component (e.g., 'BanButton')",
+        "[COMPONENT_DESCRIPTION]": "Description of what the component does",
+        "[STATE_PROP]": "Boolean prop name (e.g., 'isBanned')",
+        "[ICON_IMPORT]": "Icons to import (e.g., 'Ban, User')",
+        "[ACTIVE_ICON]": "Icon for active state (e.g., 'User')",
+        "[INACTIVE_ICON]": "Icon for inactive state (e.g., 'Ban')",
+        "[ACTIVE_CLASS]": "CSS class for active state (e.g., 'bg-green-500')",
+        "[INACTIVE_CLASS]": "CSS class for inactive state (e.g., 'bg-red-500')"
+      },
+      "usage": "Use for buttons that toggle state and show different icons"
+    },
+    "memo_component": {
+      "name": "Memo Component",
+      "description": "Template for memoized component with displayName",
+      "category": "optimization",
+      "template": "import { memo } from 'react';\n\ninterface Props {\n  // Визначте ваші пропси тут\n}\n\n/**\n * [COMPONENT_DESCRIPTION]\n */\nconst [COMPONENT_NAME]Component = ({ ...props }: Props) => {\n  return (\n    <div>\n      {/* Ваш JSX компонента */}\n    </div>\n  );\n};\n\nexport const [COMPONENT_NAME] = memo([COMPONENT_NAME]Component);\n[COMPONENT_NAME].displayName = '[COMPONENT_NAME]';",
+      "placeholders": {
+        "[COMPONENT_NAME]": "Name of the component",
+        "[COMPONENT_DESCRIPTION]": "Description of what the component does"
+      },
+      "usage": "Use for components that render often with the same props to optimize performance"
+    },
+    "hoc_component": {
+      "name": "Higher-Order Component",
+      "description": "Template for HOC with proper displayName handling",
+      "category": "pattern",
+      "template": "import { ComponentType, forwardRef } from 'react';\n\n/**\n * [HOC_DESCRIPTION]\n */\nexport function [HOC_NAME]<P extends object>(\n  WrappedComponent: ComponentType<P>\n) {\n  const [HOC_NAME]Component = forwardRef<any, P>((props, ref) => {\n    // Логіка HOC тут\n    \n    return <WrappedComponent ref={ref} {...props} />;\n  });\n\n  [HOC_NAME]Component.displayName = `[HOC_NAME](${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;\n  \n  return [HOC_NAME]Component;\n}",
+      "placeholders": {
+        "[HOC_NAME]": "Name of the HOC (e.g., 'withAuth')",
+        "[HOC_DESCRIPTION]": "Description of what the HOC does"
+      },
+      "usage": "Use for wrapping components with additional functionality (auth, loading, etc.)"
+    },
+    "server_component": {
+      "name": "Server Component",
+      "description": "Template for Next.js Server Component with data fetching",
+      "category": "nextjs",
+      "template": "import { [DATA_FUNCTION] } from '@/data/[MODULE]';\n\ninterface Props {\n  // Визначте пропси (наприклад, params, searchParams)\n}\n\n/**\n * [COMPONENT_DESCRIPTION]\n */\nexport default async function [COMPONENT_NAME]({ ...props }: Props) {\n  // Отримання даних безпосередньо в компоненті\n  const data = await [DATA_FUNCTION]();\n\n  return (\n    <div>\n      {/* Ваш JSX компонента */}\n    </div>\n  );\n}",
+      "placeholders": {
+        "[COMPONENT_NAME]": "Name of the component",
+        "[COMPONENT_DESCRIPTION]": "Description of what the component does",
+        "[DATA_FUNCTION]": "Data fetching function name",
+        "[MODULE]": "Module name for data import"
+      },
+      "usage": "Use for Next.js pages and components that need to fetch data on the server"
+    },
+    "client_component": {
+      "name": "Client Component",
+      "description": "Template for Client Component with state",
+      "category": "nextjs",
+      "template": "'use client'\n\nimport { useState } from 'react';\n\ninterface Props {\n  // Визначте пропси\n}\n\n/**\n * [COMPONENT_DESCRIPTION]\n */\nexport function [COMPONENT_NAME]({ ...props }: Props) {\n  const [state, setState] = useState<[STATE_TYPE]>([INITIAL_VALUE]);\n\n  return (\n    <div>\n      {/* Ваш JSX компонента */}\n    </div>\n  );\n}",
+      "placeholders": {
+        "[COMPONENT_NAME]": "Name of the component",
+        "[COMPONENT_DESCRIPTION]": "Description of what the component does",
+        "[STATE_TYPE]": "Type of state (e.g., 'string', 'number', 'boolean')",
+        "[INITIAL_VALUE]": "Initial state value"
+      },
+      "usage": "Use for components that need interactivity, state, or browser APIs"
+    },
+    "form_component": {
+      "name": "Form Component with React Hook Form",
+      "description": "Template for form with validation using React Hook Form and Zod",
+      "category": "form",
+      "template": "'use client'\n\nimport { useForm } from 'react-hook-form';\nimport { zodResolver } from '@hookform/resolvers/zod';\nimport { [SCHEMA_NAME] } from '@/schemas/[SCHEMA_FILE]';\nimport type { z } from 'zod';\n\ntype FormData = z.infer<typeof [SCHEMA_NAME]>;\n\ninterface Props {\n  onSubmit: (data: FormData) => Promise<void>;\n}\n\n/**\n * [COMPONENT_DESCRIPTION]\n */\nexport function [COMPONENT_NAME]({ onSubmit }: Props) {\n  const {\n    register,\n    handleSubmit,\n    formState: { errors, isSubmitting },\n  } = useForm<FormData>({\n    resolver: zodResolver([SCHEMA_NAME]),\n  });\n\n  return (\n    <form onSubmit={handleSubmit(onSubmit)} className=\"space-y-4\">\n      {/* Поля форми */}\n      \n      <button\n        type=\"submit\"\n        disabled={isSubmitting}\n        className=\"btn-primary\"\n      >\n        {isSubmitting ? 'Завантаження...' : 'Відправити'}\n      </button>\n    </form>\n  );\n}",
+      "placeholders": {
+        "[COMPONENT_NAME]": "Name of the form component",
+        "[COMPONENT_DESCRIPTION]": "Description of what the form does",
+        "[SCHEMA_NAME]": "Name of the Zod schema",
+        "[SCHEMA_FILE]": "Schema file name without extension"
+      },
+      "usage": "Use for forms with validation and submission handling"
+    }
+  },
+  "usage_examples": {
+    "creating_button": {
+      "title": "Creating a button component",
+      "steps": [
+        "1. Copy the forwardRef_button template",
+        "2. Replace [COMPONENT_NAME] with your component name (e.g., 'SaveButton')",
+        "3. Replace [COMPONENT_DESCRIPTION] with description",
+        "4. Customize Props interface if needed",
+        "5. Add any custom logic or styling",
+        "6. Test with AlertDialogTrigger asChild to ensure compatibility"
+      ],
+      "example": "See forwardRef_button template above"
+    },
+    "creating_form": {
+      "title": "Creating a form component",
+      "steps": [
+        "1. Create Zod schema in schemas/ directory",
+        "2. Copy the form_component template",
+        "3. Replace all placeholders with appropriate values",
+        "4. Add form fields with register() hook",
+        "5. Display validation errors from errors object",
+        "6. Implement onSubmit handler"
+      ],
+      "example": "See form_component template above"
+    }
+  },
+  "best_practices": [
+    "✅ Always use forwardRef for components that may work with asChild",
+    "✅ Always set displayName for forwardRef/memo/HOC components",
+    "✅ Extend proper HTML attributes interfaces (ButtonHTMLAttributes, etc.)",
+    "✅ Forward all props with {...props} to maintain flexibility",
+    "✅ Combine className properly: `${baseClass} ${className || ''}`",
+    "✅ Use TypeScript for all components with proper interfaces",
+    "✅ Add JSDoc comments for complex components",
+    "✅ Keep components focused on single responsibility",
+    "✅ Use Server Components by default, Client Components only when needed",
+    "✅ Test components in different contexts (standalone, with asChild, etc.)"
+  ],
+  "common_mistakes": [
+    "❌ Forgetting to set displayName for forwardRef components",
+    "❌ Not forwarding ref properly",
+    "❌ Not forwarding all props with {...props}",
+    "❌ Overriding className instead of combining it",
+    "❌ Using 'use client' when component could be Server Component",
+    "❌ Not extending proper HTML attributes interface",
+    "❌ Forgetting to handle loading and error states",
+    "❌ Not validating form data with Zod",
+    "❌ Creating components that are too complex (multiple responsibilities)"
+  ],
+  "validation_checklist": [
+    "✅ Component has proper TypeScript types",
+    "✅ forwardRef used if component may work with asChild",
+    "✅ displayName set for forwardRef/memo/HOC",
+    "✅ Props interface extends appropriate HTML attributes",
+    "✅ All props forwarded with {...props}",
+    "✅ className combined properly",
+    "✅ JSDoc comment added for documentation",
+    "✅ Component tested in isolation",
+    "✅ Component tested with Radix UI components (if applicable)",
+    "✅ No linter errors",
+    "✅ Comments in Ukrainian",
+    "✅ UI text in Ukrainian"
+  ]
+}

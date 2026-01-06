@@ -1,0 +1,10 @@
+{
+  "name": "Правила импортов",
+  "description": "Правила для формирования путей при импорте файлов",
+  "rules": [
+    {
+      "pattern": ".*\\.(ts|tsx|js|jsx)$",
+      "instructions": "File import rules:\n\n- Always use the '@/' alias to import files from the project root instead of relative paths with multiple '../'.\n- Examples of correct imports:\n  - `import { Button } from '@/components/ui/button'`\n  - `import { db } from '@/lib/db'`\n  - `import { getUser } from '@/data/user'`\n- Examples of incorrect imports:\n  - `import { Button } from '../../../../components/ui/button'`\n  - `import { db } from '../../../lib/db'`\n- For imports from the same directory or child directories, relative paths can be used:\n  - `import { SubComponent } from './sub-component'`\n  - `import { utils } from './utils'`\n- Group imports in the following order, separating groups with an empty line:\n  1. External libraries (React, Next.js, etc.)\n  2. Components and utilities from the project (using '@/')\n  3. Types and interfaces\n  4. Styles and resources\n- Sort imports within each group alphabetically.\n- Use named imports instead of default imports when possible.\n- Always import React types and variables directly from 'react' instead of using React namespace:\n  - Correct: `import { ReactNode, useState, useEffect } from 'react'`\n  - Incorrect: `React.ReactNode`, `React.useState`, `React.useEffect`\n\nLeave all comments in the code in Ukrainian"
+    }
+  ]
+}

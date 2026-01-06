@@ -1,0 +1,34 @@
+{
+  "name": "Правила для конкретных типов файлов",
+  "description": "Специфичные правила для различных типов файлов",
+  "rules": [
+    {
+      "pattern": ".*page\\.(tsx|ts)$",
+      "instructions": "Page Files Rules:\n\n- Must be Server Components by default.\n- Export metadata for SEO optimization.\n- Use async/await for data fetching directly in the component.\n- Implement proper error handling.\n- Use Suspense boundaries for loading states when needed.\n- Keep pages lean - extract logic to separate functions or components.\n\nExample:\nimport type { Metadata } from 'next';\nimport { getUserData } from '@/data/user';\n\nexport const metadata: Metadata = {\n  title: 'Page Title',\n  description: 'Page description for SEO',\n};\n\nexport default async function Page({ params }: { params: { id: string } }) {\n  const userData = await getUserData(params.id);\n  \n  return (\n    <main>\n      {/* Page content */}\n    </main>\n  );\n}\n\nLeave all comments in the code in Ukrainian"
+    },
+    {
+      "pattern": ".*layout\\.(tsx|ts)$",
+      "instructions": "Layout Files Rules:\n\n- Must be Server Components.\n- Should wrap children with common layout elements.\n- Can fetch data that is shared across multiple pages.\n- Export metadata that applies to all child pages.\n- Keep layouts simple and focused on structure.\n\nExample:\nimport type { Metadata } from 'next';\n\nexport const metadata: Metadata = {\n  title: {\n    template: '%s | My App',\n    default: 'My App',\n  },\n};\n\nexport default function Layout({ children }: { children: React.ReactNode }) {\n  return (\n    <div className=\"min-h-screen\">\n      <header>{/* Header */}</header>\n      <main>{children}</main>\n      <footer>{/* Footer */}</footer>\n    </div>\n  );\n}\n\nLeave all comments in the code in Ukrainian"
+    },
+    {
+      "pattern": ".*loading\\.(tsx|ts)$",
+      "instructions": "Loading Files Rules:\n\n- Automatically wraps page in Suspense boundary.\n- Should show skeleton or spinner for loading state.\n- Keep simple and performant.\n- Match the layout structure of the actual page for better UX.\n\nExample:\nexport default function Loading() {\n  return (\n    <div className=\"flex items-center justify-center min-h-screen\">\n      <div className=\"animate-spin rounded-full h-12 w-12 border-b-2 border-primary\" />\n    </div>\n  );\n}\n\nLeave all comments in the code in Ukrainian"
+    },
+    {
+      "pattern": ".*error\\.(tsx|ts)$",
+      "instructions": "Error Files Rules:\n\n- Must be a Client Component ('use client').\n- Receives error and reset props.\n- Should display user-friendly error message.\n- Provide a way to recover (reset button).\n- Log errors for debugging (in development).\n\nExample:\n'use client'\n\nexport default function Error({\n  error,\n  reset,\n}: {\n  error: Error & { digest?: string };\n  reset: () => void;\n}) {\n  return (\n    <div className=\"flex flex-col items-center justify-center min-h-screen gap-4\">\n      <h2>Something went wrong!</h2>\n      <button onClick={reset}>Try again</button>\n    </div>\n  );\n}\n\nLeave all comments in the code in Ukrainian"
+    },
+    {
+      "pattern": ".*route\\.(ts)$",
+      "instructions": "Route Handler Files Rules:\n\n- Located in app/api directory.\n- Export named functions: GET, POST, PUT, DELETE, PATCH.\n- Return NextResponse for proper HTTP responses.\n- Validate request data using Zod schemas.\n- Handle errors gracefully with appropriate status codes.\n- Use appropriate HTTP status codes (200, 201, 400, 401, 404, 500).\n\nExample:\nimport { NextResponse } from 'next/server';\nimport { z } from 'zod';\n\nconst schema = z.object({ email: z.string().email() });\n\nexport async function POST(request: Request) {\n  try {\n    const body = await request.json();\n    const validated = schema.parse(body);\n    \n    // Process request\n    \n    return NextResponse.json({ success: true }, { status: 201 });\n  } catch (error) {\n    return NextResponse.json(\n      { error: 'Invalid request' },\n      { status: 400 }\n    );\n  }\n}\n\nLeave all comments in the code in Ukrainian"
+    },
+    {
+      "pattern": ".*\\.sql$",
+      "instructions": "SQL Files Rules:\n\n- Use PostgreSQL syntax.\n- All field names in snake_case.\n- Include proper indexes for performance.\n- Add comments for complex queries.\n- Use transactions for multi-step operations.\n- Always use parameterized queries when executing.\n\nLeave all comments in the code in Ukrainian"
+    },
+    {
+      "pattern": ".*middleware\\.(ts)$",
+      "instructions": "Middleware Files Rules:\n\n- Runs before route handlers and pages.\n- Use for authentication, redirects, rewrites.\n- Keep lightweight for better performance.\n- Return NextResponse.next() to continue the request.\n- Use matcher config to specify which routes to run on.\n\nExample:\nimport { NextResponse } from 'next/server';\nimport type { NextRequest } from 'next/server';\n\nexport function middleware(request: NextRequest) {\n  // Middleware logic\n  return NextResponse.next();\n}\n\nexport const config = {\n  matcher: ['/protected/:path*'],\n};\n\nLeave all comments in the code in Ukrainian"
+    }
+  ]
+}

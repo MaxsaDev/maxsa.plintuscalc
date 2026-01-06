@@ -1,0 +1,85 @@
+{
+  "version": "1.0.0",
+  "description": "Эталонные правила для Next.js проектов. При копировании в конкретный проект укажите правильный tech-stack файл (nextjs14, nextjs15 или nextjs16).",
+  "rules": [
+    {
+      "name": "tech-stack",
+      "path": "rules/tech-stack-nextjs16.json",
+      "priority": 100,
+      "enabled": true,
+      "comment": "Next.js 16 + React 19 with React Compiler"
+    },
+    {
+      "name": "project-structure",
+      "path": "rules/project-structure.json",
+      "priority": 90,
+      "enabled": true
+    },
+    {
+      "name": "code-style",
+      "path": "rules/code-style.json",
+      "priority": 80,
+      "enabled": true
+    },
+    {
+      "name": "react-components",
+      "path": "rules/react-components.json",
+      "priority": 79,
+      "enabled": true
+    },
+    {
+      "name": "seo-semantic",
+      "path": "rules/seo-semantic.json",
+      "priority": 78,
+      "enabled": true
+    },
+    {
+      "name": "imports",
+      "path": "rules/imports.json",
+      "priority": 75,
+      "enabled": true
+    },
+    {
+      "name": "database",
+      "path": "rules/database.json",
+      "priority": 70,
+      "enabled": true
+    },
+    {
+      "name": "ui-styling",
+      "path": "rules/ui-styling.json",
+      "priority": 60,
+      "enabled": true
+    },
+    {
+      "name": "performance",
+      "path": "rules/performance.json",
+      "priority": 50,
+      "enabled": true
+    },
+    {
+      "name": "directory-specific",
+      "path": "rules/directory-specific.json",
+      "priority": 47,
+      "enabled": true
+    },
+    {
+      "name": "file-specific",
+      "path": "rules/file-specific.json",
+      "priority": 45,
+      "enabled": true
+    },
+    {
+      "name": "communication",
+      "path": "rules/communication.json",
+      "priority": 40,
+      "enabled": true
+    },
+    {
+      "name": "additional",
+      "path": "rules/additional.json",
+      "priority": 30,
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "name": "React Component Best Practices",
+  "description": "Rules for creating React components with proper patterns and displayName usage",
+  "rules": [
+    {
+      "category": "displayName Requirements",
+      "rules": [
+        {
+          "rule": "Always add displayName for forwardRef components",
+          "example": "const MyButton = forwardRef((props, ref) => {...}); MyButton.displayName = 'MyButton';",
+          "reason": "Essential for debugging in React DevTools and error stack traces",
+          "severity": "required"
+        },
+        {
+          "rule": "Always add displayName for memo components",
+          "example": "const MemoComponent = memo(MyComponent); MemoComponent.displayName = 'MemoComponent';",
+          "reason": "Memo components show as 'Memo' in DevTools without displayName",
+          "severity": "required"
+        },
+        {
+          "rule": "Always add displayName for HOC components",
+          "example": "const withAuth = (Component) => { const WrappedComponent = (props) => {...}; WrappedComponent.displayName = `withAuth(${Component.displayName})`; return WrappedComponent; };",
+          "reason": "HOCs create nested anonymous components that are hard to debug",
+          "severity": "required"
+        },
+        {
+          "rule": "Add displayName for dynamically created components",
+          "example": "const DynamicComponent = createComponent(config); DynamicComponent.displayName = 'DynamicComponent';",
+          "reason": "Dynamic components have no inherent name for debugging",
+          "severity": "required"
+        },
+        {
+          "rule": "displayName is optional for regular functional components",
+          "example": "const MyComponent = () => {...}; // displayName автоматически = 'MyComponent'",
+          "reason": "React automatically uses function name for regular components",
+          "severity": "optional"
+        }
+      ]
+    },
+    {
+      "category": "forwardRef Pattern",
+      "rules": [
+        {
+          "rule": "Use forwardRef for all button components that may work with asChild",
+          "example": "const Button = forwardRef<HTMLButtonElement, Props>(({ className, ...props }, ref) => <button ref={ref} className={className} {...props} />);",
+          "reason": "Required for compatibility with Radix UI components (AlertDialog, DropdownMenu, etc.)",
+          "severity": "required"
+        },
+        {
+          "rule": "Extend ButtonHTMLAttributes for button components",
+          "example": "interface Props extends ButtonHTMLAttributes<HTMLButtonElement> { variant: 'primary' | 'secondary'; }",
+          "reason": "Ensures full compatibility with HTML button API and TypeScript safety",
+          "severity": "required"
+        },
+        {
+          "rule": "Always forward all props with {...props}",
+          "example": "return <button ref={ref} className={`base ${className || ''}`} {...props}>{children}</button>;",
+          "reason": "Ensures all HTML attributes and event handlers are properly passed through",
+          "severity": "required"
+        },
+        {
+          "rule": "Combine className properly to avoid overriding",
+          "example": "className={`base-styles ${variant-styles} ${className || ''}`}",
+          "reason": "Preserves component styles while allowing external customization",
+          "severity": "required"
+        }
+      ]
+    },
+    {
+      "category": "asChild Compatibility",
+      "rules": [
+        {
+          "rule": "Test components with AlertDialogTrigger asChild",
+          "example": "<AlertDialogTrigger asChild><MyButton>Open Dialog</MyButton></AlertDialogTrigger>",
+          "reason": "Ensures components work correctly with Radix UI asChild pattern",
+          "severity": "recommended"
+        },
+        {
+          "rule": "Test components with DropdownMenuTrigger asChild",
+          "example": "<DropdownMenuTrigger asChild><MyButton>Open Menu</MyButton></DropdownMenuTrigger>",
+          "reason": "Ensures components work correctly with dropdown triggers",
+          "severity": "recommended"
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "correct_forwardRef_button": {
+      "description": "Properly implemented button with forwardRef and displayName",
+      "code": "import { forwardRef, ButtonHTMLAttributes } from 'react';\n\ninterface Props extends ButtonHTMLAttributes<HTMLButtonElement> {\n  variant: 'primary' | 'secondary';\n}\n\nexport const MyButton = forwardRef<HTMLButtonElement, Props>(\n  ({ variant, className, children, ...props }, ref) => {\n    return (\n      <button\n        ref={ref}\n        className={`base-button ${variant} ${className || ''}`}\n        {...props}\n      >\n        {children}\n      </button>\n    );\n  }\n);\n\nMyButton.displayName = 'MyButton';"
+    },
+    "incorrect_button": {
+      "description": "Common mistakes in button implementation",
+      "code": "// ❌ BAD: No forwardRef, no displayName, no props forwarding\nconst BadButton = ({ children }) => {\n  return <button>{children}</button>;\n};\n\n// ❌ BAD: Missing displayName\nconst AlmostGoodButton = forwardRef((props, ref) => {\n  return <button ref={ref} {...props} />;\n});\n// Missing: AlmostGoodButton.displayName = 'AlmostGoodButton';"
+    }
+  },
+  "checklist": [
+    "✅ forwardRef used for components that may work with asChild",
+    "✅ displayName added for forwardRef/memo/HOC components",
+    "✅ Props interface extends ButtonHTMLAttributes for buttons",
+    "✅ All props forwarded with {...props}",
+    "✅ className combined properly",
+    "✅ Tested with AlertDialogTrigger asChild"
+  ]
+}

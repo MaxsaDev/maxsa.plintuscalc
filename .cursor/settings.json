@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "enableCompletion": true,
+    "enableChat": true,
+    "provider": "anthropic",
+    "model": "claude-3-sonnet-20240229",
+    "temperature": 0.2,
+    "maxTokens": 4000
+  },
+  "rules": {
+    "enforceDisplayName": true,
+    "enforceForwardRef": true,
+    "validateAsChildCompatibility": true,
+    "checkTooltipIntegration": true
+  },
+  "editor": {
+    "formatOnSave": true,
+    "formatOnPaste": true,
+    "wordWrap": "on",
+    "tabSize": 2,
+    "insertSpaces": true,
+    "detectIndentation": true,
+    "trimTrailingWhitespace": true,
+    "insertFinalNewline": true
+  },
+  "terminal": {
+    "shell": "/bin/zsh",
+    "shellArgs": [],
+    "scrollback": 10000
+  }
+}

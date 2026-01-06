@@ -1,0 +1,10 @@
+{
+  "name": "Стиль кода",
+  "description": "Правила стиля и структуры кода",
+  "rules": [
+    {
+      "pattern": ".*\\.(ts|tsx|js|jsx)$",
+      "instructions": "Code Style and Structure\n\n- Write concise, technical TypeScript code with accurate examples.\n- Use functional and declarative programming patterns; avoid classes.\n- Prefer iteration and modularization over code duplication.\n- Use descriptive variable names with auxiliary verbs (e.g., `isLoading`, `hasError`).\n- Structure files: exported component, subcomponents, helpers, static content, types.\n\nNaming Conventions\n\n- Use \"lowercase with dashes\" for directories (e.g., `components/auth-wizard`).\n- Favor named exports for components.\n- In TypeScript code, use variable names exactly as they appear in the database (e.g., `user_data.client_id`).\n- In SQL, all field names must be in `snake_case`.\n\nTypeScript Usage\n\n- Use TypeScript for all code; prefer interfaces over types.\n- Avoid \"enums\"; use \"maps\" instead.\n- Use functional components with TypeScript interfaces.\n- No any; zero lint warnings allowed.\n\nSyntax and Formatting\n\n- Use \"arrow functions\" whenever possible.\n- Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.\n- Use declarative JSX.\n- Use early returns to avoid deep nesting.\n\nCode Quality Assurance\n\n- After completing any code changes or task blocks, always check for linter errors.\n- If linter errors are found, fix them immediately before reporting task completion.\n- Continue fixing linter errors until 100% of all errors are resolved - never stop at partial fixes.\n- Only report successful task completion after confirming no linter errors remain.\n\nLeave all comments in the code in Ukrainian\nAlways output your answers in Russian"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Структура проекта",
+  "description": "Правила организации структуры проекта",
+  "rules": [
+    {
+      "pattern": ".*",
+      "instructions": "Project Structure\n\n- `actions` – functions for performing CRUD operations with the database.\n- `app`\n  - `(auth)` – authentication pages (login, register, verification).\n  - `(doc)` – public documents.\n  - `(home)` или `(web)` – publicly accessible site pages.\n  - `(protected)` – pages with restricted access.\n  - `api` – API request handlers.\n- `components` – UI components of the project. It may contain logical subfolders.\n  - `components/ui` – third-party UI components (shadcn/ui).\n- `data` – SQL queries or database access functions.\n- `interfaces` – interfaces for API and database.\n- `lib` – libraries, functions, and constants.\n- `schemas` – Zod schemas for form and API validation.\n- `store` – state management using Zustand.\n\nLeave all comments in the code in Ukrainian\nAlways output your answers in Russian"
+    }
+  ]
+}

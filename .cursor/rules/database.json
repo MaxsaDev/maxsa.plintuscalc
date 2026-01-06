@@ -1,0 +1,10 @@
+{
+  "name": "База данных",
+  "description": "Правила работы с PostgreSQL",
+  "rules": [
+    {
+      "pattern": ".*\\.(sql|ts|tsx)$",
+      "instructions": "PostgreSQL Usage\n\n- Prefer \"pure SQL queries\" over ORM systems.\n- Use pg library for database connections and queries.\n- In SQL, all field names must be in `snake_case`.\n- Always use parameterized queries to prevent SQL injection:\n  ✅ db.query('SELECT * FROM users WHERE id = $1', [userId])\n  ❌ db.query(`SELECT * FROM users WHERE id = ${userId}`)\n- Handle database errors gracefully with meaningful error messages.\n- Use transactions for operations that require multiple queries.\n- Implement proper connection pooling.\n- Index frequently queried fields for better performance.\n- Use prepared statements for repeated queries.\n\nLeave all comments in the code in Ukrainian"
+    }
+  ]
+}

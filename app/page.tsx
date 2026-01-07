@@ -10,7 +10,7 @@ import { calculateAll } from '@/lib/plintus-calculator';
 import type { PlintusCalculatorFormData } from '@/schemas/plintus-calculator';
 import { plintusCalculatorSchema } from '@/schemas/plintus-calculator';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Calculator, Check } from 'lucide-react';
+import { ArrowLeft, Calculator, Check } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
@@ -80,6 +80,13 @@ export default function Home() {
           <div className="space-y-12">
             {/* Заголовок */}
             <div className="space-y-4">
+              <a
+                href="https://plintus.ua"
+                className="text-muted-foreground hover:text-foreground inline-flex items-center gap-2 text-sm transition-colors"
+              >
+                <ArrowLeft className="size-4" />
+                <span>Повернутися на сайт</span>
+              </a>
               <div className="bg-primary flex h-14 w-14 items-center justify-center rounded-2xl">
                 <Calculator className="text-primary-foreground h-7 w-7" />
               </div>

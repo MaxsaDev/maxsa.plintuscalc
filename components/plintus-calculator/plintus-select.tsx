@@ -83,7 +83,8 @@ export function PlintusSelect({ value, onValueChange, error }: PlintusSelectProp
                 {plintusList.map((plintus) => (
                   <CommandItem
                     key={plintus.id}
-                    value={`${plintus.title} ${plintus.id}`}
+                    value={plintus.title}
+                    keywords={[plintus.id]}
                     onSelect={() => {
                       onValueChange(plintus.id === value ? '' : plintus.id);
                       setOpen(false);
